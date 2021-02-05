@@ -22,7 +22,7 @@ let chartGroup = svg.append("g")
 /*******************************************************************************************************************/
 
 // Read CSV data & call functions to create graph
-d3.csv('./data/data.csv', rowConverter)
+d3.csv('assets/data/data.csv', rowConverter)
   .then(createChart)
   .catch(function (error) {
       console.log(error);
@@ -51,9 +51,9 @@ function createChart(stateData) {
     // call functions to create charts & update page
     createAxis(activeInfo);
     createCircles(activeInfo);
-    createToolTip(activeInfo);
+    // createToolTip(activeInfo);
     createLables();
-};
+
 
 // Function to create circles on the chart
 function createCircles(activeInfo) {
@@ -86,12 +86,12 @@ function createAxis(activeInfo) {
 function getXDomain() {
     let xMin = d3.min(activeInfo.data, (d) => d[activeInfo.currentX]);
     let xMax = d3.max(activeInfo.data, (d) => d[activeInfo.currentX]);
-    return [min, max];
+    return [xMin, xMax];
 };
 function getYDomain() {
     let yMin = 0
     let yMax = d3.max(activeInfo.data, (d) => d[activeInfo.currentY]);
-    return [min, max];
+    return [yMin, yMax];
 };
 
 // Function to create the labels for the chart
@@ -109,4 +109,6 @@ function createLables() {
     yLabels.append("text")
            .attr('class', 'yText')
            .text('Obesity Rate');
+};
+createChart(activeInfo);
 };
